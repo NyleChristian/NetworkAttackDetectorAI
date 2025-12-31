@@ -1,0 +1,13 @@
+[project]
+name = "networksecurityai2"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "scikit-learn",
+    "pandas",
+    "python-dotenv>=1.2.1",
+    "seaborn>=0.13.2",
+    "matplotlib>=3.10.8",
+]

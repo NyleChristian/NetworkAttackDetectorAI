@@ -1,0 +1,40 @@
+- Use Python tools to read packets on network
+- Read useful header data for features
+- Look for features outside of header
+- Feed packet data to AI to open in controlled environment
+- Use Datasets to train normal behavior
+- Introduce common attacks to train AI
+- Learn about random forest algorithm
+-
+
+- Preprocessing data
+    -https://www.youtube.com/watch?v=Icm8gofAuZI
+    -split the data into training and test dataset with no overlap
+    -ensure that distribution of unique items in columns is same
+    -ensure that number of unique items in columns is same
+    - Use Hot-encoding where each category of attack/ normal is classified by number
+    - Split data into groups by attack type
+    - Use StandardScaler() or similar to normalize data at 0 mean and 1 standard dev
+    - Random forest is used to determine which features are most impactful
+            -https://www.geeksforgeeks.org/dsa/random-forest-classifier-using-scikit-learn/
+    - Use hyperparameter tuning techniques likes GridSearchCV or RandomSearchCV
+        - most likely done before determining feature importance
+    - precision vs recall vs f1 score 
+    - focus on recall to reduce false negatives
+    - Feature selection per attack type output as ordered list
+    - Now, see if any better models for each attack type now that we have feature importance list
+    - .fit() model to find individual attack
+    - linear kernel SVM for each
+        - create classifier type of SVM for each linear
+        - fit the classifier to the training data
+
+    -Data Preprocessing > hot-encoding categories > hyperparameter tuning for random forest hparameters > Use StandardScaler() to normalize data
+   > split data into attack types and use random forest to determine feature importance for each > fit data giving table and output from training data > Pick best model for classifying 
+
+
+- Train to understand normal behavior on sample Datasets
+- Train to understand common attacks 
+- Monitor activity coming from outside into network
+- Log all activity
+- Compare activity and classify based on pre-training
+- Block suspicious behavior from outside based on classification
