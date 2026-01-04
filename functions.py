@@ -56,15 +56,15 @@ def moveColumnToEnd(df, col_name):
 
 #def getInitTrainingAccuracy(col1, col2, col3, col4)
 
-def getNImportantFeatures(df, n = 20, attack_type = 'DOS', confusion : bool = False, graph: bool = False, hypertuning = False):
+
+def getNImportantFeatures(df, n = 20, attack_type = 'DOS', useLowOccurenceModel : bool  = False, confusion : bool = False, graph: bool = False):
     
     current_attack_type = f'attack_type_{attack_type}' 
     df = moveColumnToEnd(df, current_attack_type)
     df = df.rename(columns={current_attack_type : attack_type})
     df = df.loc[:, ~df.columns.str.startswith('attack_type')]
 
-
-    df_x_test, df_y_test, classifier = trainModel(df, attack_type, hypertuning)
+    df_x_test, df_y_test, classifier = trainModelForLowOccurrence(df, attack_type, True) if useLowOccurenceModel else trainModel(df, attack_type,  True)
 
     df_y_pred = classifier.predict(df_x_test)
 
@@ -75,7 +75,7 @@ def getNImportantFeatures(df, n = 20, attack_type = 'DOS', confusion : bool = Fa
     print(f'Recall: {recall_score(df_y_test, df_y_pred):.2f}')
     print(f'F1 Score: {f1_score(df_y_test, df_y_pred):.2f}')
 
-    print("\nClassification Report:\n", classification_report(df_y_test,df_y_pred))
+    #print(f"\nClassification Report{attack_type}:\n", classification_report(df_y_test,df_y_pred))
 
     if confusion == True:
         confusionMatrix(attack_type, df_y_test, df_y_pred)
@@ -97,7 +97,7 @@ def getNImportantFeatures(df, n = 20, attack_type = 'DOS', confusion : bool = Fa
     return df [feature_importance_df['Feature'].tolist() + [attack_type]]
 
 
-def trainModel(df, attack_type, hypertuning):
+def trainModel(df, attack_type : str, hypertuning= False):
 
     df_X = df.iloc[:, :-1]
     df_y = df.iloc[:, -1]
@@ -109,16 +109,91 @@ def trainModel(df, attack_type, hypertuning):
     df_x_test_scaled = scaler.fit_transform(df_x_test)
     
   
-    #classifier = KNeighborsClassifier(n_neighbors = 5)
+    #classifier = KNeighborsClassifier(n_neighbors = 2)
     #classifier = GaussianNB()
-    classifier = RandomForestClassifier(n_estimators=100, random_state=42)
+    classifier = RandomForestClassifier(n_estimators = 100, random_state=42)
     
     if hypertuning == True: 
         classifier = hypertune(df_x_train, df_y_train,classifier)
     else:
         classifier.fit(df_x_train, df_y_train)
+        df_y_pred = classifier.predict(df_x_test)
+
+        print(f"\nClassification Report Training - {attack_type}:\n", classification_report(df_y_test,df_y_pred))
+        confusionMatrix(attack_type, df_y_test, df_y_pred)
+
     return df_x_test,df_y_test,classifier
 
+def trainModelForLowOccurrence(df, attack_type: str, hypertuning = False):
+
+    df_X = df.iloc[:, :-1]
+    df_y = df.iloc[:, -1]
+
+    df_x_train, _, df_y_train, _ = train_test_split(df_X, df_y, test_size=0.2, random_state=42)
+    
+    df_test_U2R = df[(df[attack_type] == 1)]
+    df_test_normal = df[(df[attack_type] == 0)]
+    df_test_normal = df_test_normal.head(len(df_test_U2R) * 2)
+    df_test_combined = pd.concat([df_test_normal, df_test_U2R], ignore_index=True)
+    
+    df_combined_X = df_test_combined.iloc[:, :-1]
+    df_combined_y = df_test_combined.iloc[:, -1]
+    
+    _, df_x_test, _, df_y_test = train_test_split(df_combined_X, df_combined_y, test_size=0.60, random_state=42)
+
+    # df_x_train = df_X 
+    # df_y_train = df_y
+    # df_x_test  = df_combined_X
+    # df_y_train = df_combined_y
+
+    scaler = StandardScaler()
+    df_x_train_scaled = scaler.fit_transform(df_x_train)
+    df_x_test_scaled = scaler.fit_transform(df_x_test)
+    
+  
+    #classifier = KNeighborsClassifier(n_neighbors = 2)
+    #classifier = GaussianNB()
+   
+    classifier = RandomForestClassifier(random_state=42)
+    
+    if hypertuning == True: 
+        classifier = hypertune(df_x_train, df_y_train,classifier)
+    else:
+        classifier.fit(df_x_train, df_y_train)
+        df_y_pred = classifier.predict(df_x_test)
+
+        print(f"\nClassification Report Training - {attack_type}:\n", classification_report(df_y_test,df_y_pred))
+        confusionMatrix(attack_type, df_y_test, df_y_pred)
+
+    return df_x_test,df_y_test,classifier
+
+
+
+def trainModelKNeighbor(df, hypertuning):
+
+    df_X = df.iloc[:, :-1]
+    df_y = df.iloc[:, -1]
+
+    df_x_train, df_x_test, df_y_train, df_y_test = train_test_split(df_X, df_y, test_size=0.2, random_state=42)
+
+    scaler = StandardScaler()
+    df_x_train_scaled = scaler.fit_transform(df_x_train)
+    df_x_test_scaled = scaler.fit_transform(df_x_test)
+    
+  
+    classifier = KNeighborsClassifier(n_neighbors = 2)
+    #classifier = GaussianNB()
+    #classifier = RandomForestClassifier(n_estimators=100, random_state=42)
+    
+    if hypertuning == True: 
+        classifier = hypertune(df_x_train, df_y_train,classifier)
+    else:
+        classifier.fit(df_x_train, df_y_train)
+        df_y_pred = classifier.predict(df_x_test)
+
+        print(f"\nClassification Report Training:\n", classification_report(df_y_test,df_y_pred))
+
+    return df_x_test,df_y_test,classifier
 def graphFeatures(attack_type, feature_importance_df):
     plt.barh(feature_importance_df['Feature'], feature_importance_df['Importance'] )
     plt.xlabel("Feature Importance")
@@ -136,7 +211,7 @@ def confusionMatrix(attack_type, df_y_test, df_y_pred):
     plt.show()
 
 param_grid = {
-    'n_estimators': [250],
+    'n_estimators': [25],
     'max_features': ['sqrt'],
      'max_depth': [25],
      'min_samples_split': [2,5],
@@ -147,7 +222,7 @@ param_grid = {
 def hypertune(df_x_train, df_y_train, classifier):
   
     grid_search = GridSearchCV(classifier, param_grid=param_grid, 
-                            cv=3, n_jobs=-1, verbose=2, scoring='accuracy')
+                            cv=3, n_jobs=-1, verbose=0, scoring='accuracy')
     grid_search.fit(df_x_train, df_y_train)
         
     print(f"Best parameters: {grid_search.best_params_}")

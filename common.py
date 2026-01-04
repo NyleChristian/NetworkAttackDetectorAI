@@ -4,3 +4,13 @@ ATTACK_TYPE_R2L = "R2L"
 ATTACK_TYPE_U2R = "U2R"
 NORMAL = "NORMAL"
 
+
+attackTypeMap = {
+    ATTACK_TYPE_DOS : 1,
+    ATTACK_TYPE_PROBE : 2,
+    ATTACK_TYPE_R2L : 3,
+    ATTACK_TYPE_U2R : 4,
+    NORMAL : 0 
+}
+
+

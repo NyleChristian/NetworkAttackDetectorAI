@@ -3,7 +3,7 @@ import sklearn as sk
 import os
 from dotenv import load_dotenv 
 from common import *
-from preprocessingfunctions import *
+from functions import *
 from sklearn.neighbors import KNeighborsClassifier
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -23,25 +23,13 @@ print("Initial shape:", df.shape)
 print(df.columns[df.isnull().any()].tolist())
 #df['labels'] = df['labels'].map(lambda x: 0 if x == 'normal' else 1)
 
-attackTypeMap = {
-    ATTACK_TYPE_DOS : 1,
-    ATTACK_TYPE_PROBE : 2,
-    ATTACK_TYPE_R2L : 3,
-    ATTACK_TYPE_U2R : 4,
-    NORMAL : 0 
-}
-
 
 #group attacks by type
 #create new column attack_type from labels with constant attack type names
 #create new column attack_type_number from labels with 0-4 values
 
-
 df['attack_type'] = df['labels'].map(divByAttack)
 #df['attack_type_number'] = df['attack_type'].map(attackTypeMap)
-
-
-
 
 #1-hot encode attack_type column 
 # add new binary columns for each unique value in attack_type
@@ -70,16 +58,20 @@ r2l_df = df[(df['attack_type_R2L'] == 1) | (df['attack_type_NORMAL'] == 1)]
 u2r_df = df[(df['attack_type_U2R'] == 1) | (df['attack_type_NORMAL'] == 1)]
 
 
-#getNImportantFeatures(dos_df, 20, 'DOS', True, True)
-
-df_topfeatures = getNImportantFeatures(r2l_df, 20, 'R2L')
-
-trainModel(df_topfeatures, 'R2L', False)
 
 
+df_topfeatures = getNImportantFeatures(dos_df, 20, ATTACK_TYPE_DOS)
+trainModel(df_topfeatures, ATTACK_TYPE_DOS, False)
 
 
+df_topfeatures = getNImportantFeatures(probe_df, 20, ATTACK_TYPE_PROBE)
+trainModel(df_topfeatures, ATTACK_TYPE_PROBE, False)
 
+df_topfeatures = getNImportantFeatures(r2l_df, 20, ATTACK_TYPE_R2L, True)
+trainModelForLowOccurrence(df_topfeatures, ATTACK_TYPE_R2L, False)
+
+df_topfeatures = getNImportantFeatures(u2r_df, 20, ATTACK_TYPE_U2R,True, False, True)
+trainModelForLowOccurrence(df_topfeatures, ATTACK_TYPE_U2R, False)
 #print(dos_df.head)
 
 

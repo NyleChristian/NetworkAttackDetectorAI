@@ -19,3 +19,4 @@ To begin with, I chose the NSL-KDD, a public dataset that is a nicely preprocess
 The NSL-KDD stands as a standard benchmark used in the feasibility of network security solutions, AI or otherwise
 
 Despite the NSL-KDD being a preprocessed form of another dataset, I still chose to preprocess the set in a couple ways to further improve my models accuracy:
+
