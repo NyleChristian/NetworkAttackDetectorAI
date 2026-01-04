@@ -21,28 +21,26 @@ df = pd.read_csv(path)
 df = df.drop_duplicates()
 print("Initial shape:", df.shape)
 print(df.columns[df.isnull().any()].tolist())
-#df['labels'] = df['labels'].map(lambda x: 0 if x == 'normal' else 1)
+
+print(df['labels'].unique)
 
 
-#group attacks by type
-#create new column attack_type from labels with constant attack type names
-#create new column attack_type_number from labels with 0-4 values
 
+#Simplifies 'labels' column into either normal or one of 4 attack type categories to make future encoding easier
+#Originally, there were 36 different categories under 'labels' column
 df['attack_type'] = df['labels'].map(divByAttack)
-#df['attack_type_number'] = df['attack_type'].map(attackTypeMap)
 
-#1-hot encode attack_type column 
-# add new binary columns for each unique value in attack_type
+#Adds 5 new columns with purely binary entries, one each for NORMAL and the aforementioned 4 attack types
 df = OneHotEncColumn(df, 'attack_type')
 
-#drop original labels column
+#drops nonnumerical categorical columns as model works best with numerical values
 df.drop('labels', axis=1, inplace=True)
 #1-hot encode protocol_type, service, flag columns
 df = OneHotEncColumn(df, 'protocol_type')
 df = OneHotEncColumn(df, 'service')
 df = OneHotEncColumn(df, 'flag')
 
-#drops these original columns as model only needs numeric data
+#drops these original catgegorical columns once encoded, as model only needs numeric data
 df = df.drop(['protocol_type', 'service', 'flag', 'attack_type'], axis=1)
 
 #drop rows with NaN values
