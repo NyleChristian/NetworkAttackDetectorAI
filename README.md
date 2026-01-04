@@ -27,7 +27,7 @@ Process:
 3. Feature Extraction Based on Importance
    * I used sklearn's Random Forest Classifier on each of the four datasets to get a list of the top 20 most influential features used to determine attack type
    * Each attack type is given its own list of most influential features, which helps model accuracy and efficiency as the model only needs to consider 20 features instead of the ~40 total features, and is more specialized than a general model that might focus on the same set of important features for all four attack types
-   *  <img src="assets/20260104_162219_FeatureImportancev1.png" width="50%" height="50%" />
+     <img src="assets/20260104_162219_FeatureImportancev1.png" width="75%" height="75%" />
 
 
 4. Hyperparameter Tuning
