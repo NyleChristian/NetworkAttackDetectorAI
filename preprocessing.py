@@ -4,14 +4,14 @@ import os
 from dotenv import load_dotenv 
 from common import *
 from preprocessingfunctions import *
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-from sklearn.metrics import accuracy_score, confusion_matrix
+from sklearn.metrics import accuracy_score, confusion_matrix, recall_score, f1_score, classification_report
 from sklearn.ensemble import RandomForestClassifier
-
+import numpy as np
 
 load_dotenv()
 
@@ -104,27 +104,37 @@ dos_y_pred = classifier.predict(dos_x_test)
 dos_accuracy = accuracy_score(dos_y_test, dos_y_pred)
 
 print(f'DOS Dataset Accuracy: {dos_accuracy * 100 :.2f}')
+print(f'Recall: {recall_score(dos_y_test, dos_y_pred):.2f}')
+print(f'F1 Score: {f1_score(dos_y_test, dos_y_pred):.2f}')
 
-dos_conf_matrix = confusion_matrix(dos_y_test, dos_y_pred)
+print("\nClassification Report:\n", classification_report(dos_y_test,dos_y_pred))
 
-plt.figure(figsize=(8, 6))
-sns.heatmap(dos_conf_matrix, annot=True, fmt='d', cmap='Blues', cbar=False, xticklabels=['Normal', 'DOS Attack'], yticklabels=['Normal', 'DOS Attack'])
-plt.title('DOS Attack Confusion Matrix')
-plt.xlabel('Predicted Label')
-plt.ylabel('True Label')
-plt.show()
+
+# dos_conf_matrix = confusion_matrix(dos_y_test, dos_y_pred)
+
+# plt.figure(figsize=(8, 6))
+# sns.heatmap(dos_conf_matrix, annot=True, fmt='d', cmap='Blues', cbar=False, xticklabels=['Normal', 'DOS Attack'], yticklabels=['Normal', 'DOS Attack'])
+# plt.title('DOS Attack Confusion Matrix')
+# plt.xlabel('Predicted Label')
+# plt.ylabel('True Label')
+# plt.show()
 
 dos_feature_importances = classifier.feature_importances_
 dos_feature_names = classifier.feature_names_in_
 print(f'DOS Feature Importances: {dos_feature_importances}')
-plt.barh(dos_feature_names, dos_feature_importances)
-plt.xlabel("Feature Importance")
-plt.title("DOS Feature Importance in Random Forest Classifier")
-plt.show()
 
 dos_feature_importance_df = pd.DataFrame({'Feature': dos_feature_names, 'Importance': dos_feature_importances})
 dos_feature_importance_df = dos_feature_importance_df.sort_values(by='Importance', ascending=False)
 dos_feature_importance_df = dos_feature_importance_df.head(20)
+
+
+
+plt.barh(dos_feature_importance_df['Feature'], dos_feature_importance_df['Importance'] )
+plt.xlabel("Feature Importance")
+plt.title("DOS Feature Importance in Random Forest Classifier")
+plt.show()
+
+
 
 
 

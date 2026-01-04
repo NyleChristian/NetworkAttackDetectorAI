@@ -38,3 +38,4 @@
 - Log all activity
 - Compare activity and classify based on pre-training
 - Block suspicious behavior from outside based on classification
+https://medium.com/@weidagang/demystifying-precision-and-recall-in-machine-learning-6f756a4c54ac
