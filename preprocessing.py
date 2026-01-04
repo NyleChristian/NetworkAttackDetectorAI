@@ -4,7 +4,7 @@ import os
 from dotenv import load_dotenv 
 from common import *
 from preprocessingfunctions import *
-from sklearn.preprocessing
+from sklearn.neighbors import KNeighborsClassifier
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.model_selection import train_test_split
@@ -69,72 +69,12 @@ probe_df = df[(df['attack_type_PROBE'] == 1) | (df['attack_type_NORMAL'] == 1)]
 r2l_df = df[(df['attack_type_R2L'] == 1) | (df['attack_type_NORMAL'] == 1)]
 u2r_df = df[(df['attack_type_U2R'] == 1) | (df['attack_type_NORMAL'] == 1)]
 
-# print("dos",dos_df.shape)
-# print("probe",probe_df.shape)
-# print("r2l",r2l_df.shape)
-# print("u2r",u2r_df.shape)
 
+#getNImportantFeatures(dos_df, 20, 'DOS', True, True)
 
-# print(dos_df['src_bytes'])
+df_topfeatures = getNImportantFeatures(r2l_df, 20, 'R2L')
 
-# scaler_dos = StandardScaler().fit(dos_df)
-# dos_df = scaler_dos.transform(dos_df)
-# scaler_probe = StandardScaler().fit(probe_df)
-# probe_df = scaler_probe.transform(probe_df)
-# scaler_r2l = StandardScaler().fit(r2l_df)
-# r2l_df = scaler_r2l.transform(r2l_df)
-# scaler_u2r = StandardScaler().fit(u2r_df)
-# u2r_df = scaler_u2r.transform(u2r_df)
-
-#===============================Random Forest for feature importance on Dos dataset
-#move dos_attack flag to end
-dos_df = dos_df.drop(['attack_type_PROBE','attack_type_R2L','attack_type_U2R', 'attack_type_NORMAL'], axis=1)
-dos_df = moveColumnToEnd(dos_df, 'attack_type_DOS')
-dos_X = dos_df.iloc[:, :-1]
-dos_y = dos_df.iloc[:, -1]
-
-dos_x_train, dos_x_test, dos_y_train, dos_y_test = train_test_split(dos_X, dos_y, test_size=0.2, random_state=42)
-
-
-
-classifier = RandomForestClassifier(n_estimators=100, random_state=42)
-classifier.fit(dos_x_train, dos_y_train)
-dos_y_pred = classifier.predict(dos_x_test)
-
-dos_accuracy = accuracy_score(dos_y_test, dos_y_pred)
-
-print(f'DOS Dataset Accuracy: {dos_accuracy * 100 :.2f}')
-print(f'Recall: {recall_score(dos_y_test, dos_y_pred):.2f}')
-print(f'F1 Score: {f1_score(dos_y_test, dos_y_pred):.2f}')
-
-print("\nClassification Report:\n", classification_report(dos_y_test,dos_y_pred))
-
-
-# dos_conf_matrix = confusion_matrix(dos_y_test, dos_y_pred)
-
-# plt.figure(figsize=(8, 6))
-# sns.heatmap(dos_conf_matrix, annot=True, fmt='d', cmap='Blues', cbar=False, xticklabels=['Normal', 'DOS Attack'], yticklabels=['Normal', 'DOS Attack'])
-# plt.title('DOS Attack Confusion Matrix')
-# plt.xlabel('Predicted Label')
-# plt.ylabel('True Label')
-# plt.show()
-
-dos_feature_importances = classifier.feature_importances_
-dos_feature_names = classifier.feature_names_in_
-print(f'DOS Feature Importances: {dos_feature_importances}')
-
-dos_feature_importance_df = pd.DataFrame({'Feature': dos_feature_names, 'Importance': dos_feature_importances})
-dos_feature_importance_df = dos_feature_importance_df.sort_values(by='Importance', ascending=False)
-dos_feature_importance_df = dos_feature_importance_df.head(20)
-
-
-
-plt.barh(dos_feature_importance_df['Feature'], dos_feature_importance_df['Importance'] )
-plt.xlabel("Feature Importance")
-plt.title("DOS Feature Importance in Random Forest Classifier")
-plt.show()
-
-
+trainModel(df_topfeatures, 'R2L', False)
 
 
 
