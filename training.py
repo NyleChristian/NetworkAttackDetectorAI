@@ -65,10 +65,11 @@ trainModel(df_topfeatures, ATTACK_TYPE_DOS, False)
 df_topfeatures = getNImportantFeatures(probe_df, 20, ATTACK_TYPE_PROBE)
 trainModel(df_topfeatures, ATTACK_TYPE_PROBE, False)
 
-df_topfeatures = getNImportantFeatures(r2l_df, 20, ATTACK_TYPE_R2L, True)
+df_topfeatures = getNImportantFeatures(r2l_df, 20, ATTACK_TYPE_R2L,True)
 trainModelForLowOccurrence(df_topfeatures, ATTACK_TYPE_R2L, False)
 
-df_topfeatures = getNImportantFeatures(u2r_df, 20, ATTACK_TYPE_U2R,True, False, True)
+df_topfeatures = getNImportantFeatures(u2r_df, 20, ATTACK_TYPE_U2R,True)
+#trainModel(df_topfeatures, ATTACK_TYPE_U2R, False)
 trainModelForLowOccurrence(df_topfeatures, ATTACK_TYPE_U2R, False)
 #print(dos_df.head)
 
