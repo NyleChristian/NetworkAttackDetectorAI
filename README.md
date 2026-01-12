@@ -47,10 +47,10 @@ Use various AI models trained separately with differing feature importances and 
    | R2L         | 0.99      | 0.91   | 0.95     | 607     |
    | U2R         | 1.00      | 0.79   | 0.88     | 19      |
 
-# Challenges
+## Challenges:
 
 1. Low volume of test data for certain attack types
    * R2L and U2R both had very low occurrences in their own datasets. This led the model to struggle to find strong feature importances and other correlations in data, hurting model accuracy significantly as it would consider all entries to be normal whether they actually were or not <img src="assets/beforeafter.png" width="75%" height="75%" />
    * To solve this, a custom training/test dataset split was used that specifically ensured a significant amount of instances of an attack type are present within its own dataset.
    * As seen in the image, being conscious of data distributions led to a significant overall increase in f1 scores of attack identification for both U2R and R2L
-   *
+   
