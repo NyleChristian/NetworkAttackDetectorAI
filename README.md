@@ -27,7 +27,7 @@ Use various AI models trained separately with differing feature importances and 
 
    * Used sklearn's Random Forest Classifier on each of the four datasets to get a list of the top 20 most influential features
    * Each attack type is given its own list of most influential features, which helps model accuracy and efficiency as the model only needs to consider 20 features instead of the ~40 total features, and is more specialized than a general model that might focus on the same set of important features for all four attack types
-     <img src="assets/20260104_162219_FeatureImportancev1.png" width="75%" height="75%" />
+     <img src="assets/dosfeatures.png" width="75%" height="75%" />
 4. Hyperparameter Tuning
 
    * Used GridSearchCV to brute force determine the best values of Random Forest hyperparameters
@@ -50,7 +50,7 @@ Use various AI models trained separately with differing feature importances and 
 # Challenges
 
 1. Low volume of test data for certain attack types
-   * R2L and U2R both had very low occurrences in their own datasets. This led the model to struggle to find strong feature importances and other correlations in data, hurting model accuracy significantly as it would consider all entries to be normal whether they actually were or not <img src="assets/beforeafter" width="75%" height="75%" />
+   * R2L and U2R both had very low occurrences in their own datasets. This led the model to struggle to find strong feature importances and other correlations in data, hurting model accuracy significantly as it would consider all entries to be normal whether they actually were or not <img src="assets/beforeafter.png" width="75%" height="75%" />
    * To solve this, a custom training/test dataset split was used that specifically ensured a significant amount of instances of an attack type are present within its own dataset.
    * As seen in the image, being conscious of data distributions led to a significant overall increase in f1 scores of attack identification for both U2R and R2L
    *
