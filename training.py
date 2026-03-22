@@ -17,8 +17,11 @@ load_dotenv()
 
 #Open dataset
 path = os.getenv('INPUT_FILE')
+#set df equal to entire csv dataset
 df = pd.read_csv(path)
+#drop dupe rows
 df = df.drop_duplicates()
+
 print("Initial shape:", df.shape)
 print(df.columns[df.isnull().any()].tolist())
 
@@ -26,8 +29,9 @@ print(df['labels'].unique)
 
 
 
-#Simplifies 'labels' column into either normal or one of 4 attack type categories to make future encoding easier
+#Simplifies 'labels' column into either normal or one of 4 "attack type" categories to make future encoding easier
 #Originally, there were 36 different categories under 'labels' column
+
 df['attack_type'] = df['labels'].map(divByAttack)
 
 #Adds 5 new columns with purely binary entries, one each for NORMAL and the aforementioned 4 attack types
@@ -51,6 +55,8 @@ print("Shape after preprocessing:", df.shape)
 
 #=========================split dataset into 4 subsets based on attack type, including normal traffic in each subset
 dos_df = df[(df['attack_type_DOS'] == 1) | (df['attack_type_NORMAL'] == 1)]
+#fullheaderList = pd.DataFrame(columns=dos_df.columns)
+#fullheaderList.to_csv(f'headers_only_DOS_full.csv', index=False)
 probe_df = df[(df['attack_type_PROBE'] == 1) | (df['attack_type_NORMAL'] == 1)]
 r2l_df = df[(df['attack_type_R2L'] == 1) | (df['attack_type_NORMAL'] == 1)]
 u2r_df = df[(df['attack_type_U2R'] == 1) | (df['attack_type_NORMAL'] == 1)]

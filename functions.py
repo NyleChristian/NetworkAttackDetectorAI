@@ -12,6 +12,7 @@ from sklearn.naive_bayes import GaussianNB
 from sklearn.datasets import make_blobs
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import GridSearchCV, train_test_split
+import joblib
 
 
 def divByAttack(label):
@@ -91,8 +92,10 @@ def getNImportantFeatures(df, n = 20, attack_type = 'DOS', useLowOccurenceModel 
     if graph == True:
         graphFeatures(attack_type, feature_importance_df)
 
-    return df [feature_importance_df['Feature'].tolist() + [attack_type]]
-
+    top20df = df[feature_importance_df['Feature'].tolist() + [attack_type]]
+    #top20headers = pd.DataFrame(columns=df.columns)
+    #top20headers.to_csv(f'headers_only_{attack_type}.csv', index=False)
+    return top20df
 
 def trainModel(df, attack_type : str, hypertuning= False):
 
@@ -114,7 +117,11 @@ def trainModel(df, attack_type : str, hypertuning= False):
         classifier = hypertune(df_x_train, df_y_train,classifier)
     else:
         classifier.fit(df_x_train, df_y_train)
+        joblib.dump(classifier, f'{attack_type}_model.joblib')
         df_y_pred = classifier.predict(df_x_test)
+        pd.DataFrame(columns=df_x_train.columns).to_csv(f'headers_only_{attack_type}.csv', index=False)
+        ##df_x_test.to_csv(f'{attack_type}_x_test.csv', index=False)
+
 
         print(f"\nClassification Report Training - {attack_type}:\n", classification_report(df_y_test,df_y_pred))
         confusionMatrix(attack_type, df_y_test, df_y_pred)
@@ -153,7 +160,11 @@ def trainModelForLowOccurrence(df, attack_type: str, hypertuning = False):
         classifier = hypertune(df_x_train, df_y_train,classifier)
     else:
         classifier.fit(df_x_train, df_y_train)
+        joblib.dump(classifier, f'{attack_type}_model.joblib')
         df_y_pred = classifier.predict(df_x_test)
+        pd.DataFrame(columns=df_x_train.columns).to_csv(f'headers_only_{attack_type}.csv', index=False)
+        #df_x_test.to_csv(f'{attack_type}_x_test.csv', index=False)
+
 
         print(f"\nClassification Report Training - {attack_type}:\n", classification_report(df_y_test,df_y_pred))
         confusionMatrix(attack_type, df_y_test, df_y_pred)
