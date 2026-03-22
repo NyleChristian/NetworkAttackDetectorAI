@@ -35,37 +35,8 @@ def preprocess_input(attack_type,input_data):
 
     file_like_object = io.StringIO(input_data_with_header)
     df = pd.read_csv(file_like_object)
-  
-
 
     return df
-
-def preprocess_inputOLD(input_data):
-    # Implement your preprocessing logic here
-
-    with open('headers_only_DOS_full.csv', mode='r', newline='', encoding='utf-8') as csv_file:
-        header_reader = csv_file.readline().strip()  # Read the first line (header) and remove any leading/trailing whitespace
-
-   
-    input_data_with_header = header_reader + "\n" + input_data
-
-    file_like_object = io.StringIO(input_data_with_header)
-    df = pd.read_csv(file_like_object)
-    #drop dupe rows
-    #df = df.drop_duplicates()
-    
-    #1-hot encode protocol_type, service, flag columns
-    df = OneHotEncColumn(df, 'protocol_type')
-    df = OneHotEncColumn(df, 'service')
-    df = OneHotEncColumn(df, 'flag')
-
-    columns_to_keep = read_csv_to_list('headers_only_DOS.csv')[0]
-    print(columns_to_keep)
-    dfreturn  = df[columns_to_keep]
-
-
-
-    return dfreturn
 
 
 google_search = GoogleSearchTool()

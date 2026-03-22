@@ -28,7 +28,6 @@ print(df.columns[df.isnull().any()].tolist())
 print(df['labels'].unique)
 
 
-
 #Simplifies 'labels' column into either normal or one of 4 "attack type" categories to make future encoding easier
 #Originally, there were 36 different categories under 'labels' column
 
@@ -55,12 +54,9 @@ print("Shape after preprocessing:", df.shape)
 
 #=========================split dataset into 4 subsets based on attack type, including normal traffic in each subset
 dos_df = df[(df['attack_type_DOS'] == 1) | (df['attack_type_NORMAL'] == 1)]
-#fullheaderList = pd.DataFrame(columns=dos_df.columns)
-#fullheaderList.to_csv(f'headers_only_DOS_full.csv', index=False)
 probe_df = df[(df['attack_type_PROBE'] == 1) | (df['attack_type_NORMAL'] == 1)]
 r2l_df = df[(df['attack_type_R2L'] == 1) | (df['attack_type_NORMAL'] == 1)]
 u2r_df = df[(df['attack_type_U2R'] == 1) | (df['attack_type_NORMAL'] == 1)]
-
 
 
 
