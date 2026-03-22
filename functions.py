@@ -120,7 +120,7 @@ def trainModel(df, attack_type : str, hypertuning= False):
         joblib.dump(classifier, f'{attack_type}_model.joblib')
         df_y_pred = classifier.predict(df_x_test)
         pd.DataFrame(columns=df_x_train.columns).to_csv(f'headers_only_{attack_type}.csv', index=False)
-        ##df_x_test.to_csv(f'{attack_type}_x_test.csv', index=False)
+        df_x_test.to_csv(f'{attack_type}_x_test.csv', index=False)
 
 
         print(f"\nClassification Report Training - {attack_type}:\n", classification_report(df_y_test,df_y_pred))
@@ -163,7 +163,7 @@ def trainModelForLowOccurrence(df, attack_type: str, hypertuning = False):
         joblib.dump(classifier, f'{attack_type}_model.joblib')
         df_y_pred = classifier.predict(df_x_test)
         pd.DataFrame(columns=df_x_train.columns).to_csv(f'headers_only_{attack_type}.csv', index=False)
-        #df_x_test.to_csv(f'{attack_type}_x_test.csv', index=False)
+        df_x_test.to_csv(f'{attack_type}_x_test.csv', index=False)
 
 
         print(f"\nClassification Report Training - {attack_type}:\n", classification_report(df_y_test,df_y_pred))

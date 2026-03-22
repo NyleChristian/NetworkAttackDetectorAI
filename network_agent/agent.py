@@ -11,8 +11,21 @@ from functions import *
 import io
 import pandas as pd
 import csv
+from google.adk.agents.parallel_agent import ParallelAgent
+from google.adk.agents.llm_agent import LlmAgent
+from google.adk.agents.sequential_agent import SequentialAgent
+from google.adk.models.lite_llm import LiteLlm
 
 load_dotenv()
+
+OLLAMA_API_BASE = os.getenv("OLLAMA_API_BASE", "http://localhost:11434")
+OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "llama3.1")
+
+# Ensure ADK treats this as a chat model and knows where Ollama lives
+ollama_llm = LiteLlm(
+    model=f"ollama_chat/{OLLAMA_MODEL}",
+    api_base=OLLAMA_API_BASE,
+)
 
 def read_csv_to_list(filename):
     data = []
@@ -76,8 +89,8 @@ def u2r_predict(input_data):
     predict = u2r_model.predict(preprocess_input("U2R", input_data))
     return convert_prediction_to_string(predict)
 
-root_agent = Agent(
-    model='gemini-2.5-flash',
+root_agentold = Agent(
+    model=ollama_llm,
     name='root_agent',
     description='You are a network security agent tasked with classifying network traffic as either normal or one of 4 attack types: DOS, PROBE, R2L, U2R.',
     instruction="""
@@ -89,3 +102,97 @@ root_agent = Agent(
     """,
     tools=[dos_predict, probe_predict, r2l_predict, u2r_predict],
 )
+
+dos_Agent = Agent(
+    model='gemini-2.5-flash',
+    name='dos_Agent',
+    description='You are a network security agent tasked with classifying network traffic as either normal or  DOS.',
+    instruction="""
+    Use the dos_predict tool to classify the input network traffic data as either normal or DOS attack.
+    If a file is attached, you MUST call the tool for each row, and make a prediction on each row individually (skip the first row).
+    Only call the tool that corresponds to the attack type the user wants to test for. 
+    User needs to provide the attack type they want to test for and the network traffic data in csv format. 
+    Input data MUST be passed as a String.
+    Do not give output to user. only give output to the next AI Agent.
+    """,
+    tools=[dos_predict],
+)
+
+probe_Agent = Agent(
+    model='gemini-2.5-flash', 
+    name='probe_Agent',
+    description='You are a network security agent tasked with classifying network traffic as either normal or PROBE.',
+    instruction="""   Use the probe_predict tool to classify the input network traffic data as either normal or PROBE attack.   
+    If a file is attached, you MUST call the tool for each row, and make a prediction on each row individually (skip the first row).
+    Only call the tool that corresponds to the attack type the user wants to test for.          
+    User needs to provide the attack type they want to test for and the network traffic data in csv format.
+    Input data MUST be passed as a String.
+    Do not give output to user. only give output to the next AI Agent.
+    """,
+    tools=[probe_predict],
+)
+
+r2l_Agent = Agent(
+    model='gemini-2.5-flash',   
+
+    name='r2l_Agent',
+    description='You are a network security agent tasked with classifying network traffic as either normal or R2L.',
+    instruction="""   Use the r2l_predict tool to classify the input network traffic data as either normal or R2L attack.
+    If a file is attached, you MUST call the tool for each row, and make a prediction on each row individually (skip the first row).
+    Only call the tool that corresponds to the attack type the user wants to test for.
+    User needs to provide the attack type they want to test for and the network traffic data in csv format.
+    Input data MUST be passed as a String.
+    Do not give output to user. only give output to the next AI Agent.
+    """,
+    tools=[r2l_predict],
+
+)
+
+
+u2r_Agent = Agent(
+    model='gemini-2.5-flash',
+    name='u2r_Agent',
+    description='You are a network security agent tasked with classifying network traffic as either normal or U2R.',
+    instruction="""   Use the u2r_predict tool to classify the input network traffic data as either normal or U2R attack.
+    If a file is attached, you MUST call the tool for each row, and make a prediction on each row individually (skip the first row).
+    Only call the tool that corresponds to the attack type the user wants to test for.
+    User needs to provide the attack type they want to test for and the network traffic data in csv format.
+    Input data MUST be passed as a String.
+    Do not give output to user. only give output to the next AI Agent.  
+    """,
+    tools=[u2r_predict],
+
+)
+
+
+
+
+parallel_research_agent = ParallelAgent(
+     name="Parallel_network__attack_research_agent",
+     sub_agents=[dos_Agent, probe_Agent],
+     description="Runs multiple research agents in parallel to gather information."
+ )
+
+merger_agent = LlmAgent(
+    name="MergerAgent",
+    model="gemini-2.5-flash",
+    description="Merges the results from parallel research agents and synthesizes the information.",
+    instruction="""
+    You are a merger agent that takes the outputs of multiple parallel research agents and synthesizes the information into a cohesive format.
+    Your task is to take the predictions from each agent and compile them into a single report that indicates which attack types were detected in the input network traffic data.
+    The output should be in a clear, tabular format that lists each row number of input data along with the corresponding predictions from each agent.
+    Do not include input data itself in the output, only include the row number and the predictions from each agent.
+   
+
+      """,
+)
+
+sequential_pipeline_agent = SequentialAgent(
+     name="Network_Attack_Classification_Agent",
+     # Run parallel research first, then merge
+     sub_agents=[parallel_research_agent, merger_agent],
+     description="Coordinates parallel agents and synthesizes the results."
+ )
+
+
+root_agent  =sequential_pipeline_agent

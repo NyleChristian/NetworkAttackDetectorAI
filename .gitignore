@@ -219,3 +219,5 @@ headers_only_DOS.csv
 headers_only_PROBE.csv
 headers_only_R2L.csv
 headers_only_U2R.csv
+R2L_x_test.csv
+U2R_x_test.csv
