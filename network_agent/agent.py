@@ -104,7 +104,7 @@ root_agentold = Agent(
 )
 
 dos_Agent = Agent(
-    model='gemini-2.5-flash',
+    model=ollama_llm,
     name='dos_Agent',
     description='You are a network security agent tasked with classifying network traffic as either normal or  DOS.',
     instruction="""
@@ -119,7 +119,7 @@ dos_Agent = Agent(
 )
 
 probe_Agent = Agent(
-    model='gemini-2.5-flash', 
+    model=ollama_llm, 
     name='probe_Agent',
     description='You are a network security agent tasked with classifying network traffic as either normal or PROBE.',
     instruction="""   Use the probe_predict tool to classify the input network traffic data as either normal or PROBE attack.   
