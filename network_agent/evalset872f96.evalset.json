@@ -1,0 +1,254 @@
+{
+  "eval_set_id": "evalset872f96",
+  "name": "evalset872f96",
+  "eval_cases": [
+    {
+      "eval_id": "case368501",
+      "conversation": [
+        {
+          "invocation_id": "e-351fb1d7-c93f-4d34-a39c-2dce04b19ea0",
+          "user_content": {
+            "parts": [
+              {
+                "text": "0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,22.0,0.0,0.0,0.0,9.0,66.0,0.0\n"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "The provided network traffic data is classified as a Denial of Service (DoS) attack."
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "invocation_events": [
+              {
+                "author": "root_agent",
+                "content": {
+                  "parts": [
+                    {
+                      "function_call": {
+                        "id": "adk-7b7be13e-54b5-4606-be73-f2117a50ae95",
+                        "args": {
+                          "input_data": "0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,22.0,0.0,0.0,0.0,9.0,66.0,0.0"
+                        },
+                        "name": "dos_predict"
+                      },
+                      "thought_signature": "CvgCAb4-9vsGqORItAriwYHe_4tJcNBhyNwzMEn-GhzFC34Vjkr3y-P1ppBDeeiWsRpij2RCza7lTm2L3aCl8iEVqlltae5Zux2pR1J_ztdmWuKPB9HteeIlCM4GJye-F029h-5jBVb0HWYOYOlUbGUhnbghzWE_9SklvNW8xQ2djs0oSV2zvlaqZd7NQzubZRa6HX6f_IJdaFP145wX_Nqte20h9qBRVYphvVt8jYhptnVxovkuHFq9KYCp8BRi81rQsV1JTFKdDlN6PRgbwl7X2oCEgX_HTjdw5glhx1W2h_BKsXSybBYAzUGDcHkzZ_UQ6-j3ys-jNo76KJLEDX8PxoSoJeq3BimuywUFjbsluyKIVhV4Cuxn3S7les_9-FNmqYNpaByAouRwzuXFsgft54KwLBi9feuJTHpAgUCVYGsAEx1K2kpTH_wH8477XQiFM-R8wQPdxH6guVBmKJpyVtNeQzyFcXFfJaiYOomFAuIANxADrfubGQ=="
+                    }
+                  ],
+                  "role": "model"
+                }
+              },
+              {
+                "author": "root_agent",
+                "content": {
+                  "parts": [
+                    {
+                      "function_response": {
+                        "id": "adk-7b7be13e-54b5-4606-be73-f2117a50ae95",
+                        "name": "dos_predict",
+                        "response": {
+                          "result": "match"
+                        }
+                      }
+                    }
+                  ],
+                  "role": "user"
+                }
+              }
+            ]
+          },
+          "creation_timestamp": 1774209230.991824
+        },
+        {
+          "invocation_id": "e-30cec1a4-bce4-4176-8fe1-e462b07727d2",
+          "user_content": {
+            "parts": [
+              {
+                "text": "Check for each item in the attached file"
+              },
+              {
+                "inline_data": {
+                  "data": "ZmxhZ19TRixmbGFnX1MwLHNlcnZpY2VfaHR0cCxzZXJ2aWNlX3ByaXZhdGUsZmxhZ19SRUoscHJvdG9jb2xfdHlwZV91ZHAscHJvdG9jb2xfdHlwZV9pY21wLHNlcnZpY2VfZWNyX2kscHJvdG9jb2xfdHlwZV90Y3Asc2VydmljZV9zbXRwLHNlcnZpY2VfZG9tYWluX3UsZmxhZ19SU1RSLHNlcnZpY2VfdGVsbmV0LGNvdW50LGZsYWdfUlNUTyxzcmNfYnl0ZXMsc2VydmljZV9mdHBfZGF0YSxzcnZfY291bnQsZHN0X2hvc3Rfc3J2X2NvdW50LGRzdF9ieXRlcw0KMS4wLDAuMCwwLjAsMS4wLDAuMCwxLjAsMC4wLDAuMCwwLjAsMC4wLDAuMCwwLjAsMC4wLDEuMCwwLjAsNDguMCwwLjAsMS4wLDE0LjAsNDguMA0KMC4wLDEuMCwwLjAsMS4wLDAuMCwwLjAsMC4wLDAuMCwxLjAsMC4wLDAuMCwwLjAsMC4wLDUuMCwwLjAsNDYuMCwwLjAsNS4wLDI1My4wLDAuMA0KMS4wLDAuMCwxLjAsMC4wLDAuMCwwLjAsMC4wLDAuMCwxLjAsMC4wLDAuMCwwLjAsMC4wLDMxLjAsMC4wLDI0My4wLDAuMCw4My4wLDI1NS4wLDI2MS4wDQowLjAsMS4wLDAuMCwxLjAsMC4wLDAuMCwwLjAsMC4wLDEuMCwwLjAsMC4wLDAuMCwwLjAsMzIuMCwwLjAsMC4wLDAuMCwxMi4wLDY4LjAsMC4wDQoxLjAsMC4wLDAuMCwwLjAsMC4wLDAuMCwwLjAsMC4wLDEuMCwwLjAsMC4wLDAuMCwxLjAsMS4wLDAuMCwxOTE4LjAsMC4wLDEuMCw1NC4wLDMzNC4wDQoxLjAsMC4wLDEuMCwwLjAsMC4wLDAuMCwwLjAsMC4wLDEuMCwwLjAsMC4wLDAuMCwwLjAsMi4wLDAuMCwyMzguMCwwLjAsMi4wLDE2Mi4wLDE0MjUuMA0K",
+                  "display_name": "DOS_x_test - Copy.csv",
+                  "mime_type": "text/csv"
+                }
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "Here are the classifications for each line of network traffic data:\n\n*   Line 1: `1.0,0.0,0.0,1.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,48.0,0.0,1.0,14.0,48.0` is classified as **not a DoS attack**.\n*   Line 2: `0.0,1.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,5.0,0.0,46.0,0.0,5.0,253.0,0.0` is classified as a **DoS attack**.\n*   Line 3: `1.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,31.0,0.0,243.0,0.0,83.0,255.0,261.0` is classified as **not a DoS attack**.\n*   Line 4: `0.0,1.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,32.0,0.0,0.0,0.0,12.0,68.0,0.0` is classified as a **DoS attack**.\n*   Line 5: `1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0,1.0,0.0,1918.0,0.0,1.0,54.0,334.0` is classified as **not a DoS attack**.\n*   Line 6: `1.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,2.0,0.0,238.0,0.0,2.0,162.0,1425.0` is classified as **not a DoS attack**."
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "invocation_events": [
+              {
+                "author": "root_agent",
+                "content": {
+                  "parts": [
+                    {
+                      "function_call": {
+                        "id": "adk-baae3022-1db6-455b-bbb0-0b1d5d67d01f",
+                        "args": {
+                          "input_data": "1.0,0.0,0.0,1.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,48.0,0.0,1.0,14.0,48.0"
+                        },
+                        "name": "dos_predict"
+                      },
+                      "thought_signature": "Ct4DAb4-9vs2baMa7gb2m0nDOHAlVsYmOpNYQxJ4_B_NPZ2peJ9ZRgVD2CktSQyp8cAoM6XnvlyAMIn-NxT_IY6FnFInQvFpk2c_KB-pANYDUfHtSrQ5A3evaAAXlil-DGsELzdMmPTTuWJcfIg4I85qBEcGmWm5YHy2v-vJ900nskCPSgCqorPvvOf657cwCf0mYP3yorMSnX6DBAWHEx5hbH0iDP36aoxv3bLQc2Y-xJckFG9xr7QfYV_kYc5eerNvVbiGQtucWW4jbGWxBakngBxMXqO3-fAYuYK6yQkks33prBe5pqbtbm8Xl6X16xh-BzwdC5KvJ3TMGAg9NDlyW036GdlGQ0JUeXZJZmPj7lbbUYkEZ87vpkKtLPgy8YHIjf5oAWleWG18axXJnTwZrOryYpG3cgI_YerfpTQS28yBjwdpsG-zflVJD6fgu4jYC34tNBt_sZ2kBMOx9uCFn2WmRHXavEJ9hN02ZmvvQk0qH_6xrm9XUVM_Hogc4okkBUkZTgSrMXVf29T8U0VzZNmQriFwAD3OrcQ9Qti8sxrUDJrEbQ5rR4GAlD9aWQ6odYPp0oY3AoUCC_y7vHjfe3Hz8bUOP3g_8AWO4x2ax4gbBgylwHfTiqrD-bVHsg=="
+                    },
+                    {
+                      "function_call": {
+                        "id": "adk-fc5f794a-c3b8-46ae-87a0-970ca8c4419b",
+                        "args": {
+                          "input_data": "0.0,1.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,5.0,0.0,46.0,0.0,5.0,253.0,0.0"
+                        },
+                        "name": "dos_predict"
+                      }
+                    },
+                    {
+                      "function_call": {
+                        "id": "adk-40330e4b-b595-4c83-b18f-14e0a7477e29",
+                        "args": {
+                          "input_data": "1.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,31.0,0.0,243.0,0.0,83.0,255.0,261.0"
+                        },
+                        "name": "dos_predict"
+                      }
+                    },
+                    {
+                      "function_call": {
+                        "id": "adk-56ddca20-7256-4e83-9f3f-d6282b267d23",
+                        "args": {
+                          "input_data": "0.0,1.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,32.0,0.0,0.0,0.0,12.0,68.0,0.0"
+                        },
+                        "name": "dos_predict"
+                      }
+                    },
+                    {
+                      "function_call": {
+                        "id": "adk-f1c2bf07-16b1-49c3-a9d3-e7a41ce24488",
+                        "args": {
+                          "input_data": "1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0,1.0,0.0,1918.0,0.0,1.0,54.0,334.0"
+                        },
+                        "name": "dos_predict"
+                      }
+                    },
+                    {
+                      "function_call": {
+                        "id": "adk-fcef8760-fc2f-44f2-85af-a4e8f0ac01f0",
+                        "args": {
+                          "input_data": "1.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,2.0,0.0,238.0,0.0,2.0,162.0,1425.0"
+                        },
+                        "name": "dos_predict"
+                      }
+                    }
+                  ],
+                  "role": "model"
+                }
+              },
+              {
+                "author": "root_agent",
+                "content": {
+                  "parts": [
+                    {
+                      "function_response": {
+                        "id": "adk-baae3022-1db6-455b-bbb0-0b1d5d67d01f",
+                        "name": "dos_predict",
+                        "response": {
+                          "result": "not match"
+                        }
+                      }
+                    },
+                    {
+                      "function_response": {
+                        "id": "adk-fc5f794a-c3b8-46ae-87a0-970ca8c4419b",
+                        "name": "dos_predict",
+                        "response": {
+                          "result": "match"
+                        }
+                      }
+                    },
+                    {
+                      "function_response": {
+                        "id": "adk-40330e4b-b595-4c83-b18f-14e0a7477e29",
+                        "name": "dos_predict",
+                        "response": {
+                          "result": "not match"
+                        }
+                      }
+                    },
+                    {
+                      "function_response": {
+                        "id": "adk-56ddca20-7256-4e83-9f3f-d6282b267d23",
+                        "name": "dos_predict",
+                        "response": {
+                          "result": "match"
+                        }
+                      }
+                    },
+                    {
+                      "function_response": {
+                        "id": "adk-f1c2bf07-16b1-49c3-a9d3-e7a41ce24488",
+                        "name": "dos_predict",
+                        "response": {
+                          "result": "not match"
+                        }
+                      }
+                    },
+                    {
+                      "function_response": {
+                        "id": "adk-fcef8760-fc2f-44f2-85af-a4e8f0ac01f0",
+                        "name": "dos_predict",
+                        "response": {
+                          "result": "not match"
+                        }
+                      }
+                    }
+                  ],
+                  "role": "user"
+                }
+              }
+            ]
+          },
+          "creation_timestamp": 1774209547.3157086
+        },
+        {
+          "invocation_id": "e-98661920-8e88-45ef-aaa5-88b3829932ff",
+          "user_content": {
+            "parts": [
+              {
+                "text": "present in a nice colorful tabular format"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "Here is the classification of your network traffic data:\n\n| Network Traffic Data                                                                                             | Classification     |\n| :--------------------------------------------------------------------------------------------------------------- | :----------------- |\n| `1.0,0.0,0.0,1.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,48.0,0.0,1.0,14.0,48.0`                             | Normal Traffic     |\n| `0.0,1.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,5.0,0.0,46.0,0.0,5.0,253.0,0.0`                             | **DoS Attack**     |\n| `1.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,31.0,0.0,243.0,0.0,83.0,255.0,261.0`                         | Normal Traffic     |\n| `0.0,1.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,32.0,0.0,0.0,0.0,12.0,68.0,0.0`                             | **DoS Attack**     |\n| `1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0,1.0,0.0,1918.0,0.0,1.0,54.0,334.0`                           | Normal Traffic     |\n| `1.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,2.0,0.0,238.0,0.0,2.0,162.0,1425.0`                           | Normal Traffic     |",
+                "thought_signature": "CtUDAb4-9vvsMtxMY2U9330XH1w1pyIGQpdf44PGaE_HMRJoMC3tuFQsaZjcGYfZvTsVISjXSit6qejACvNqpPlwKI7hVbgNHroT3MhyRNS4wQbFmo6zlfo-z0oDtDAT3ozgcSPYHDKS1duXAOB7BURc0abdCh8nvoyIBPOEFaNWBnXYI1It9Rk19hAYrVMcW71uJZbZfXOVvhzXSXJnjWKANTJS5h_-CY5nyksH40OqIMpXC4DJzajQa_B07ZKQ4DPCdPh7bn7yUdzsDluTX5OX6UPC5sm8pfrvHv36PYDiEIKMhmZQp2m6oTKhuKO8so72IkJnAiSZ1CFhUbnMZCiiniuQq7l8v4jP9Byittf66BI_fV4WBJRKv8RNEVGN5eA7hoN3PKNXdsxu6ly3QilhyifKTOb_WbkoYKmsnmXRWJa5HlxGFg4F2qKxesyDfVqrl9LSMXGPJ0ckbuowogy3p0vGwlUHYwv2c7DCub3nNV9Na2na14ihTDDZ8Lz6qcmgL6dR6ZD_3Ed8Ts7KzKaukSNirNJAwxy_Q0vqXLPqpgFsSvHVbNOZ4WRiz9-pmBs9qJdIdoWoSbXTvwI6lyAxa63bpXbG1kuSAYbPA_vGC3GnzyCsDw=="
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {},
+          "creation_timestamp": 1774209585.254905
+        }
+      ],
+      "session_input": {
+        "app_name": "network_agent",
+        "user_id": "user"
+      },
+      "creation_timestamp": 1774209702.8524685
+    }
+  ],
+  "creation_timestamp": 1774209695.1882017
+}
