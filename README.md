@@ -52,7 +52,7 @@ Use various AI models trained separately with differing feature importances and 
    * Use the trained models for testing and validating model to provide chat based UI interface.
    * Used Google ADK toolkit to implement multi agents work flow (Parallel Agent, Sequence Agent, LLM Agent)
    * Use ADK built-in Web UI to agentic capability and workflow
-   <img src="assets/ai_agent_multi.png" width="50%" height="50%" />
+   <img src="assets/ai_agent_multi.PNG" width="50%" height="50%" />
  
 ## Challenges:
 
