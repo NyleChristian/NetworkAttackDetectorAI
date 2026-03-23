@@ -47,6 +47,13 @@ Use various AI models trained separately with differing feature importances and 
    | R2L         | 0.99      | 0.91   | 0.95     | 607     |
    | U2R         | 1.00      | 0.79   | 0.88     | 19      |
 
+6. Multi Agent integration using Google ADK (Agent Development Kit) to provide interface for trained model inference
+
+   * Use the trained models for testing and validating model to provide chat based UI interface.
+   * Used Google ADK toolkit to implement multi agents work flow (Parallel Agent, Sequence Agent, LLM Agent)
+   * Use ADK built-in Web UI to agentic capability and workflow
+   <img src="assets/ai_agent_multi.png" width="50%" height="50%" />
+ 
 ## Challenges:
 
 1. Low volume of test data for certain attack types
