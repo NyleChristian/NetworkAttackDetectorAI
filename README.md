@@ -1,5 +1,7 @@
 # Introduction:
 
+Any internal home network that has connection to the wider internet has a high level of risk to malicious outsider attacks. One solution is to keep home networks with valueble data completely isolated from the internet, though this is not satisfactory as files cannot be accessed remotely anymore. Instead of manually double-checking all suspicious activity, I thought to create an AI model that will notify me of suspicious behaviour on my network.
+
 # Problem Statement:
 
 Classify anomalous behavior on the network as either normal network traffic or one of 4 categories of attack types:
