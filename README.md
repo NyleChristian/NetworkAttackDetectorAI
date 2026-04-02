@@ -1,6 +1,6 @@
 # Introduction:
 
-Any internal home network that has connection to the wider internet has a high level of risk to malicious outsider attacks. One solution is to keep home networks with valueble data completely isolated from the internet, though this is not satisfactory as files cannot be accessed remotely anymore. Instead of manually double-checking all suspicious activity, I thought to create an AI model that will notify me of suspicious behaviour on my network.
+Any internal home network with a connection to the wider internet has a high level of risk of malicious outsider attacks. One solution is to keep home networks with valuable data completely isolated from the internet, though this is not satisfactory, as files cannot be accessed remotely anymore. Instead of manually double-checking all suspicious activity, I thought of creating an AI model that will notify me of suspicious behaviour on my network.
 
 # Problem Statement:
 
@@ -17,7 +17,7 @@ Use various AI models trained separately with differing feature importances and 
 1. **Data Set**
 
    * NSL-KDD public dataset was chosen for model training
-   * The dataset is considered as an industry benchmark used in the feasibility of network security AI solutions
+   * The dataset is considered an industry benchmark used in the feasibility of network security AI solutions
 2. **Preprocessing** - *Preparing and restructuring data to allow the model to most efficiently learn from it*
 
    * Dropped duplicate rows and null entries
@@ -30,12 +30,12 @@ Use various AI models trained separately with differing feature importances and 
    * Used sklearn's Random Forest Classifier on each of the four datasets to get a list of the top 20 most influential features
    * Each attack type is given its own list of most influential features, which helps model accuracy and efficiency as the model only needs to consider 20 features instead of the ~40 total features, and is more specialized than a general model that might focus on the same set of important features for all four attack types
      <img src="assets/dosfeatures.png" width="75%" height="75%" />
-4. Hyperparameter Tuning
+4. **Hyperparameter Tuning**
 
    * Used GridSearchCV to brute force determine the best values of Random Forest hyperparameters
    * While GridSeachCV is computationally expensive, but it provides better results compared to RandomSearchCV
    * Surprisingly, the addition of hyperparameter tuning via GridSearchCV provided no significant improvement in accuracy worth mentioning
-5. Training Model
+5. **Training Model**
 
    * Models used: Random Forest, KNN, and Gaussian NB
    * Best results were found with random forest algorithm
@@ -49,10 +49,10 @@ Use various AI models trained separately with differing feature importances and 
    | R2L         | 0.99      | 0.91   | 0.95     | 607     |
    | U2R         | 1.00      | 0.79   | 0.88     | 19      |
 
-6. Multi Agent integration using Google ADK (Agent Development Kit) to provide interface for trained model inference
+6. **Multi-agent integration using Google ADK (Agent Development Kit) to provide an interface for trained model inference**
 
-   * Use the trained models for testing and validating model to provide chat based UI interface.
-   * Used Google ADK toolkit to implement multi agents work flow (Parallel Agent, Sequence Agent, LLM Agent)
+   * Use the trained models for testing and validating the model to provide a chat-based UI interface.
+   * Used Google ADK toolkit to implement multi-agent workflow (Parallel Agent, Sequence Agent, LLM Agent)
    * Experimented with various LLMs and tools - Gemini models & LLAMA 
    * Use ADK built-in Web UI to agentic capability and workflow
    <img src="assets/ai_agent_multi.PNG" width="50%" height="50%" />
@@ -60,7 +60,7 @@ Use various AI models trained separately with differing feature importances and 
 ## Challenges:
 
 1. Low volume of test data for certain attack types
-   * R2L and U2R both had very low occurrences in their own datasets. This led the model to struggle to find strong feature importances and other correlations in data, hurting model accuracy significantly as it would consider all entries to be normal whether they actually were or not <img src="assets/beforeafter.png" width="75%" height="75%" />
-   * To solve this, a custom training/test dataset split was used that specifically ensured a significant amount of instances of an attack type are present within its own dataset.
+   * R2L and U2R both had very low occurrences in their own datasets. This led the model to struggle to find strong feature importances and other correlations in data, hurting model accuracy significantly as it would consider all entries to be normal, whether they actually were or not <img src="assets/beforeafter.png" width="75%" height="75%" />
+   * To solve this, a custom training/test dataset split was used that specifically ensured a significant amount of instances of an attack type were present within its own dataset.
    * As seen in the image, being conscious of data distributions led to a significant overall increase in f1 scores of attack identification for both U2R and R2L
    
