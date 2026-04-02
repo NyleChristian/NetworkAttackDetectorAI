@@ -21,24 +21,24 @@ Use various AI models trained separately with differing feature importances and 
 2. **Preprocessing** - *Preparing and restructuring data to allow the model to most efficiently learn from it*
 
    * Dropped duplicate rows and null entries
-   * Simplified 36 attack labels into 4 generalized attack types or as normal network activity
-   * **One-Hot Encoded** attack types and all other categorical feature columns. While one-hot encoding requires more columns than label encoding, it simplifies the training/prediction process as there are simple binary columns indicating normal or attack, especially useful for models such as Random Forest, which are tree-based algorithms
-   * Drop categorical columns after one-hot encoding. This is because models perform better with purely numerical data and they are now redundant after encoding
-   * Split the dataset into four groups based on attack type, with each group containing normal entries for the model to compare against. This allows for increased model accuracy as we will use Random Forest to determine four sets of the most important features for classifying each type
+   * Simplified 36 attack labels into 4 generalized attack types, or as normal network activity
+   * **One-Hot Encoded** attack types and all other categorical feature columns. While one-hot encoding requires more columns than label encoding, it simplifies the training/prediction process, as there are simple binary columns indicating normal or attack, especially useful for models such as Random Forest, which are tree-based algorithms
+   * Drop categorical columns after one-hot encoding. This is because models perform better with purely numerical data, and they are now redundant after encoding
+   * Split the dataset into four groups based on attack type, with each group containing normal entries for the model to compare against. This allows for increased model accuracy, as we will use Random Forest to determine four sets of the most important features for classifying each type
 3. **Feature Extraction Based on Importance** - *Find distinct influential features for each attack type*
 
-   * Used sklearn's Random Forest Classifier on each of the four datasets to get a list of the top 20 most influential features
+   * Used Scikit-learn's Random Forest Classifier on each of the four datasets to get a list of the top 20 most influential features
    * Each attack type is given its own list of most influential features, which helps model accuracy and efficiency as the model only needs to consider 20 features instead of the ~40 total features, and is more specialized than a general model that might focus on the same set of important features for all four attack types
      <img src="assets/dosfeatures.png" width="75%" height="75%" />
 4. **Hyperparameter Tuning**
 
    * Used GridSearchCV to brute force determine the best values of Random Forest hyperparameters
-   * While GridSeachCV is computationally expensive, but it provides better results compared to RandomSearchCV
+   * While GridSearchCV is computationally expensive, it provides better results compared to RandomSearchCV
    * Surprisingly, the addition of hyperparameter tuning via GridSearchCV provided no significant improvement in accuracy worth mentioning
 5. **Training Model**
 
    * Models used: Random Forest, KNN, and Gaussian NB
-   * Best results were found with random forest algorithm
+   * Best results were found with the random forest algorithm
    * Final results:
 
 
@@ -54,7 +54,7 @@ Use various AI models trained separately with differing feature importances and 
    * Use the trained models for testing and validating the model to provide a chat-based UI interface.
    * Used Google ADK toolkit to implement multi-agent workflow (Parallel Agent, Sequence Agent, LLM Agent)
    * Experimented with various LLMs and tools - Gemini models & LLAMA 
-   * Use ADK built-in Web UI to agentic capability and workflow
+   * Use the ADK built-in Web UI to access the agentic capability and workflow
    <img src="assets/ai_agent_multi.PNG" width="50%" height="50%" />
  
 ## Challenges:
@@ -62,5 +62,5 @@ Use various AI models trained separately with differing feature importances and 
 1. Low volume of test data for certain attack types
    * R2L and U2R both had very low occurrences in their own datasets. This led the model to struggle to find strong feature importances and other correlations in data, hurting model accuracy significantly as it would consider all entries to be normal, whether they actually were or not <img src="assets/beforeafter.png" width="75%" height="75%" />
    * To solve this, a custom training/test dataset split was used that specifically ensured a significant amount of instances of an attack type were present within its own dataset.
-   * As seen in the image, being conscious of data distributions led to a significant overall increase in f1 scores of attack identification for both U2R and R2L
+   * As seen in the image, being conscious of data distributions led to a significant overall increase in F1 scores of attack identification for both U2R and R2L
    
